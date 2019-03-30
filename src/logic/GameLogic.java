@@ -106,6 +106,7 @@ public class GameLogic {
             listaObjetosDibujables.add(breakout);
             bola = new Bola(this);
             listaObjetosDibujables.add(bola);
+            
             // TODO 
         }
         
