@@ -25,11 +25,11 @@ public class Breakout extends Sprite {
     }
     
     public void moverIzquierda() {
-        setX(getX() - 5);
+        setX(getX() - 10);
     }
     
     public void moverDerecha() {
-        setX(getX() + 5);
+        setX(getX() + 10);
     }
     
 }

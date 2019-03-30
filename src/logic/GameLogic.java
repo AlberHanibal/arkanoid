@@ -6,6 +6,7 @@
 package logic;
 
 import audio.StdSound;
+import figuras.Bola;
 import figuras.Breakout;
 import figuras.Fondo;
 import figuras.Marcador;
@@ -35,7 +36,8 @@ public class GameLogic {
     private List<Dibujable> listaObjetosDibujables;
    
     // --- Los objetos de los que quieras tener una referencia
-    Breakout breakout;
+    private Breakout breakout;
+    Bola bola;
     // TODO Añadir la pelota, una colección con los ladrillos, etc..
    
 
@@ -75,6 +77,9 @@ public class GameLogic {
         if (teclas.contains(KeyEvent.VK_LEFT)) {
             breakout.moverIzquierda();
         }
+        if (teclas.contains(KeyEvent.VK_RIGHT)) {
+            breakout.moverDerecha();
+        }
         
     }
 
@@ -99,6 +104,8 @@ public class GameLogic {
             listaObjetosDibujables.add(new Marcador(this)); // inyección de dependencias
             breakout = new Breakout(this); // inyección de dependencias
             listaObjetosDibujables.add(breakout);
+            bola = new Bola(this);
+            listaObjetosDibujables.add(bola);
             // TODO 
         }
         
@@ -110,10 +117,20 @@ public class GameLogic {
         return vidas;
     }
 
+    public void setVidas(int vidas) {
+        this.vidas = vidas;
+    }
+
     public int getPuntos() {
         return puntos;
     }
-    
-    
+
+    public Breakout getBreakout() {
+        return breakout;
+    }
+
+    public void setBreakout(Breakout breakout) {
+        this.breakout = breakout;
+    }
     
 }
