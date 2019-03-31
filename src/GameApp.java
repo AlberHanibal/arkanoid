@@ -114,7 +114,7 @@ public class GameApp extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // Crear un temporizador e inicializarlo
-        timer = new Timer(40, (e) -> {
+        timer = new Timer(20, (e) -> {
             pintarFotograma();
         });
         timer.start();

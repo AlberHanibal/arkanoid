@@ -6,6 +6,7 @@
 package logic;
 
 import audio.StdSound;
+import figuras.Bloque;
 import figuras.Bola;
 import figuras.Breakout;
 import figuras.Fondo;
@@ -37,12 +38,13 @@ public class GameLogic {
    
     // --- Los objetos de los que quieras tener una referencia
     private Breakout breakout;
-    Bola bola;
+    private Bola bola;
     // TODO Añadir la pelota, una colección con los ladrillos, etc..
-   
+    private List<Bloque> listaBloques;
 
     public GameLogic() {
         listaObjetosDibujables = new LinkedList<>();
+        listaBloques = new LinkedList<>();
         empezar();
     }
     /**
@@ -105,8 +107,10 @@ public class GameLogic {
             breakout = new Breakout(this); // inyección de dependencias
             listaObjetosDibujables.add(breakout);
             bola = new Bola(this);
+//            bola.setModoInvencible(true);
             listaObjetosDibujables.add(bola);
-            
+            inicializarBloques(listaBloques, MapaNivel.mapa, nivel);
+            listaObjetosDibujables.addAll(listaBloques);
             // TODO 
         }
         
@@ -114,6 +118,45 @@ public class GameLogic {
         
     }
 
+    private void inicializarBloques(List<Bloque> bloques, String[][] mapa, int nivel) {
+        int vertical = 80;
+        for (int fila = 0; fila < mapa[nivel].length; fila++) {
+            int horizontal = 30;
+            for (int i = 0; i < mapa[nivel][fila].length(); i++) {
+                Bloque brick = new Bloque(this, charParaBloque(mapa[nivel][fila].charAt(i)));
+                brick.setX(horizontal);
+                brick.setY(vertical);
+                horizontal = horizontal + brick.getWidth();
+                bloques.add(brick);
+                System.out.println("Bloque" + i);
+            }
+            vertical = vertical + 22;
+        }
+    }
+    
+    private String charParaBloque(char c) {
+        if (c == 'b') {
+            return "brick_blue.png";
+        } else if (c == 'c') {
+            return "brick_cyan.png";
+        } else if (c == 'g') {
+            return "brick_green.png";
+        } else if (c == 'm') {
+            return "brick_magenta.png";
+        } else if (c == 'o') {
+            return "brick_orange.png";
+        } else if (c == 'r') {
+            return "brick_red.png";
+        } else if (c == 'y') {
+            return "brick_yellow.png";
+        } else if (c == 'h') {
+            return "hard.png";
+        } else {
+            return "error";
+//            throw new IllegalArgumentException();
+        }
+    }
+    
     public int getVidas() {
         return vidas;
     }
@@ -132,6 +175,14 @@ public class GameLogic {
 
     public void setBreakout(Breakout breakout) {
         this.breakout = breakout;
+    }
+
+    public Bola getBola() {
+        return bola;
+    }
+
+    public List<Bloque> getListaBloques() {
+        return listaBloques;
     }
     
 }

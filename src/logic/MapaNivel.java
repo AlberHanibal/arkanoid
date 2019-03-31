@@ -16,10 +16,8 @@ public class MapaNivel {
     public static final String[][] mapa = {
         // Nivel 0
         {
-            "bbccccbb",
-            "gghmmhgg",
-            "mmhoohmm",
-            "ryyyyyyr"   
+            "bbcchhcbbb",
+            "yyrrhhmmgg"
         },
         // Nivel 1
         {
