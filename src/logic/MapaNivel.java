@@ -13,11 +13,13 @@ public class MapaNivel {
     // Los ladrillos como caracteres por comodidad
     // b=blue; c=cyan; g = green; m = magenta
     // o = orange, h = ladrillo duro
+    // - = hueco
     public static final String[][] mapa = {
         // Nivel 0
         {
             "bbcchhcbbb",
-            "yyrrhhmmgg"
+            "yyrrhhmmgg",
+            "--mmmm--mm"
         },
         // Nivel 1
         {

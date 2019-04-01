@@ -120,15 +120,19 @@ public class GameLogic {
 
     private void inicializarBloques(List<Bloque> bloques, String[][] mapa, int nivel) {
         int vertical = 80;
+        char c;
         for (int fila = 0; fila < mapa[nivel].length; fila++) {
             int horizontal = 30;
             for (int i = 0; i < mapa[nivel][fila].length(); i++) {
-                Bloque brick = new Bloque(this, charParaBloque(mapa[nivel][fila].charAt(i)));
-                brick.setX(horizontal);
-                brick.setY(vertical);
-                horizontal = horizontal + brick.getWidth();
-                bloques.add(brick);
-                System.out.println("Bloque" + i);
+                c = mapa[nivel][fila].charAt(i);
+                if (c != '-') {
+                    Bloque brick = new Bloque(this, charParaBloque(c));
+                    brick.setX(horizontal);
+                    brick.setY(vertical);
+                    bloques.add(brick);    
+                }
+                horizontal = horizontal + 44;
+                
             }
             vertical = vertical + 22;
         }
