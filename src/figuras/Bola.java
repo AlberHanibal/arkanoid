@@ -37,6 +37,7 @@ public class Bola extends Sprite implements Animable, Eliminable {
         breakout = logic.getBreakout();
         bloques = logic.getListaBloques();
         logica = logic;
+        mejoras = logic.getMejoras();
         setX(300);
         setY(500);
     }

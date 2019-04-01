@@ -41,7 +41,7 @@ public class GameLogic {
     private Breakout breakout;
     private List<Bola> listaBolas;
     private List<Bloque> listaBloques;
-    public List<Mejora> mejoras;
+    private List<Mejora> mejoras;
 
     public GameLogic() {
         listaObjetosDibujables = new LinkedList<>();
@@ -211,6 +211,10 @@ public class GameLogic {
 
     public void setBreakout(Breakout breakout) {
         this.breakout = breakout;
+    }
+
+    public List<Mejora> getMejoras() {
+        return mejoras;
     }
 
     public List<Bloque> getListaBloques() {
