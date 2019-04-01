@@ -21,6 +21,8 @@ public class Bola extends Sprite implements Animable, Eliminable {
     private int incrY;
     private Breakout breakout;
     private List<Bloque> bloques;
+    private GameLogic logica;
+    private List<Mejora> mejoras;
     
     public Bola (GameLogic logic) {
         super(new String[] {
@@ -34,6 +36,7 @@ public class Bola extends Sprite implements Animable, Eliminable {
         eliminar = false;
         breakout = logic.getBreakout();
         bloques = logic.getListaBloques();
+        logica = logic;
         setX(300);
         setY(500);
     }
@@ -74,11 +77,17 @@ public class Bola extends Sprite implements Animable, Eliminable {
                 brick.restarVida();
                 if (brick.getVida() == 0) {
                     brick.setEliminar(true);
+                    random = new Random();
+                    if (random.nextInt(7) == 1) {
+                        Mejora m = generarMejora(brick.getX(), brick.getY());
+                        mejoras.add(m);
+                        logica.getListaObjetosDibujables().add(m);
+                    }
                     iter.remove();
-                    // soltar mejora
-                    // sumar puntos
+                    logica.setPuntos(logica.getPuntos() + brick.getPuntuacion());
                     
                 }
+                
                 colisionConBloque = true;
             }
         }
@@ -89,6 +98,19 @@ public class Bola extends Sprite implements Animable, Eliminable {
         }
     }
 
+    private Mejora generarMejora(int x, int y) {
+        Random random = new Random();
+        int n = random.nextInt(2);
+        String skin = "special_red.png";
+        if (n == 0) {
+            skin = "special_blue.png";
+        } else if (n == 1) {
+            skin = "special_green.png";
+        }
+        Mejora m = new Mejora(skin, x, y, breakout);
+        return m;
+    }
+    
     @Override
     public boolean estaEliminado() {
         return eliminar;

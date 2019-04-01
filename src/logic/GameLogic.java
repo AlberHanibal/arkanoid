@@ -11,6 +11,7 @@ import figuras.Bola;
 import figuras.Breakout;
 import figuras.Fondo;
 import figuras.Marcador;
+import figuras.Mejora;
 import figuras.base.Animable;
 import figuras.base.Dibujable;
 import figuras.base.Eliminable;
@@ -38,13 +39,15 @@ public class GameLogic {
    
     // --- Los objetos de los que quieras tener una referencia
     private Breakout breakout;
-    private Bola bola;
-    // TODO Añadir la pelota, una colección con los ladrillos, etc..
+    private List<Bola> listaBolas;
     private List<Bloque> listaBloques;
+    public List<Mejora> mejoras;
 
     public GameLogic() {
         listaObjetosDibujables = new LinkedList<>();
         listaBloques = new LinkedList<>();
+        listaBolas = new LinkedList<>();
+        mejoras = new LinkedList<Mejora>();
         empezar();
     }
     /**
@@ -61,6 +64,12 @@ public class GameLogic {
             if (objetoDelJuego instanceof Eliminable) { // Si está eliminado lo quitamos
                 if (((Eliminable) objetoDelJuego).estaEliminado()) {
                     iter.remove();
+                    if (objetoDelJuego instanceof Bola) {
+                        listaBolas.remove(objetoDelJuego);
+                    }
+                    if (objetoDelJuego instanceof Mejora) {
+                        mejoras.remove(objetoDelJuego);
+                    }
                     continue;
                 }
             }
@@ -68,7 +77,14 @@ public class GameLogic {
             if (objetoDelJuego instanceof Animable) { // Y si está auto-animado, lo movemos
                 ((Animable) objetoDelJuego).mover();
             }
-        } 
+        }
+        if (listaBolas.isEmpty()) {
+            setVidas(getVidas() - 1);
+            continuar();
+        }
+        if (listaBloques.isEmpty()) {
+            empezar();
+        }
     }
     
     /**
@@ -93,6 +109,17 @@ public class GameLogic {
         // TO-DO Inicia el juego!
         listaObjetosDibujables.clear();
         inicializarNivel(0);
+        
+    }
+    
+    public void continuar() {
+        if (vidas == 0) {
+            StdSound.playMidi(("assets/audio/game_over.mid"));
+        } else if (vidas > 0) {
+            Bola bola = new Bola(this);
+            listaBolas.add(bola);
+            listaObjetosDibujables.add(bola);      
+        }
     }
     
     public void inicializarNivel(int nivel) {
@@ -106,8 +133,9 @@ public class GameLogic {
             listaObjetosDibujables.add(new Marcador(this)); // inyección de dependencias
             breakout = new Breakout(this); // inyección de dependencias
             listaObjetosDibujables.add(breakout);
-            bola = new Bola(this);
-//            bola.setModoInvencible(true);
+            Bola bola = new Bola(this);
+            bola.setModoInvencible(true);
+            listaBolas.add(bola);
             listaObjetosDibujables.add(bola);
             inicializarBloques(listaBloques, MapaNivel.mapa, nivel);
             listaObjetosDibujables.addAll(listaBloques);
@@ -173,6 +201,10 @@ public class GameLogic {
         return puntos;
     }
 
+    public void setPuntos(int puntos) {
+        this.puntos = puntos;
+    }
+
     public Breakout getBreakout() {
         return breakout;
     }
@@ -181,12 +213,12 @@ public class GameLogic {
         this.breakout = breakout;
     }
 
-    public Bola getBola() {
-        return bola;
-    }
-
     public List<Bloque> getListaBloques() {
         return listaBloques;
+    }
+
+    public List<Dibujable> getListaObjetosDibujables() {
+        return listaObjetosDibujables;
     }
     
 }

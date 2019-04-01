@@ -48,6 +48,12 @@ public class Marcador implements Dibujable {
         g.drawString(msg, X+1, Y+1);
         g.setColor(Color.YELLOW);
         g.drawString(msg, X, Y);
+        if (logica.getVidas() == 0) {
+            g.setColor(Color.red);          
+            g.drawString("GAME OVER", 200, 350);
+        }
+        
+        
     }
 
 }
