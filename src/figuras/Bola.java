@@ -22,7 +22,7 @@ public class Bola extends Sprite implements Animable, Eliminable {
     private Breakout breakout;
     private List<Bloque> bloques;
     private GameLogic logica;
-    private List<Mejora> mejoras;
+    private Mejora mejoraActiva;
     
     public Bola (GameLogic logic) {
         super(new String[] {
@@ -37,7 +37,7 @@ public class Bola extends Sprite implements Animable, Eliminable {
         breakout = logic.getBreakout();
         bloques = logic.getListaBloques();
         logica = logic;
-        mejoras = logic.getMejoras();
+        mejoraActiva = logic.getMejoraActiva();
         setX(300);
         setY(500);
     }
@@ -79,16 +79,14 @@ public class Bola extends Sprite implements Animable, Eliminable {
                 if (brick.getVida() == 0) {
                     brick.setEliminar(true);
                     random = new Random();
-                    if (random.nextInt(7) == 1) {
-                        Mejora m = generarMejora(brick.getX(), brick.getY());
-                        mejoras.add(m);
-                        logica.getListaObjetosDibujables().add(m);
-                    }
+                    //if (random.nextInt(7) == 1) {
+                        //Mejora m = generarMejora(brick.getX(), brick.getY());
+                        //logica.getListaObjetosDibujables().add(m);
+                    //}
                     iter.remove();
                     logica.setPuntos(logica.getPuntos() + brick.getPuntuacion());
                     
                 }
-                
                 colisionConBloque = true;
             }
         }
@@ -108,7 +106,7 @@ public class Bola extends Sprite implements Animable, Eliminable {
         } else if (n == 1) {
             skin = "special_green.png";
         }
-        Mejora m = new Mejora(skin, x, y, breakout);
+        Mejora m = new Mejora(skin, x, y, breakout, logica);
         return m;
     }
     

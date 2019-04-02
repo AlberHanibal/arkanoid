@@ -41,20 +41,22 @@ public class GameLogic {
     private Breakout breakout;
     private List<Bola> listaBolas;
     private List<Bloque> listaBloques;
-    private List<Mejora> mejoras;
+    private Mejora mejoraActiva;
 
     public GameLogic() {
         listaObjetosDibujables = new LinkedList<>();
         listaBloques = new LinkedList<>();
         listaBolas = new LinkedList<>();
-        mejoras = new LinkedList<Mejora>();
         empezar();
     }
     /**
      * Invocado en cada fotograma desde el frame
      * @param g 
      */
-    public void dibujarYActualizarTodo(Graphics g) {    
+    public void dibujarYActualizarTodo(Graphics g) {
+        if (mejoraActiva != null && !listaObjetosDibujables.contains(mejoraActiva)) {
+            listaObjetosDibujables.add(mejoraActiva);
+        }
         Iterator<Dibujable> iter = listaObjetosDibujables.iterator();
         while (true) {
             if (!iter.hasNext()) { // Si no hay siguiente, salir del bucle
@@ -66,9 +68,6 @@ public class GameLogic {
                     iter.remove();
                     if (objetoDelJuego instanceof Bola) {
                         listaBolas.remove(objetoDelJuego);
-                    }
-                    if (objetoDelJuego instanceof Mejora) {
-                        mejoras.remove(objetoDelJuego);
                     }
                     continue;
                 }
@@ -84,6 +83,8 @@ public class GameLogic {
         }
         if (listaBloques.isEmpty()) {
             empezar();
+//            listaObjetosDibujables.clear();
+//            inicializarNivel(1);
         }
     }
     
@@ -213,8 +214,8 @@ public class GameLogic {
         this.breakout = breakout;
     }
 
-    public List<Mejora> getMejoras() {
-        return mejoras;
+    public Mejora getMejoraActiva() {
+        return mejoraActiva;
     }
 
     public List<Bloque> getListaBloques() {
