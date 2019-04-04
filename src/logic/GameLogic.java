@@ -42,7 +42,8 @@ public class GameLogic {
     private List<Bola> listaBolas;
     private List<Bloque> listaBloques;
     private Mejora mejoraActiva;
-
+    private int nivel;
+    
     public GameLogic() {
         listaObjetosDibujables = new LinkedList<>();
         listaBloques = new LinkedList<>();
@@ -82,12 +83,12 @@ public class GameLogic {
             continuar();
         }
         if (listaBloques.isEmpty()) {
-            empezar();
-//            listaObjetosDibujables.clear();
-//            inicializarNivel(1);
+            listaObjetosDibujables.clear();
+            nivel = nivel + 1;
+            inicializarNivel();
         }
     }
-    
+
     /**
      * Invocado en cada fotograma desde el frame
      * @param teclas 
@@ -109,26 +110,26 @@ public class GameLogic {
     public void empezar() {
         // TO-DO Inicia el juego!
         listaObjetosDibujables.clear();
-        inicializarNivel(0);
-        
+        nivel = 0;
+        puntos = 0;
+        inicializarNivel();
     }
     
     public void continuar() {
         if (vidas == 0) {
             StdSound.playMidi(("assets/audio/game_over.mid"));
+            listaObjetosDibujables.clear();
         } else if (vidas > 0) {
             Bola bola = new Bola(this);
             listaBolas.add(bola);
             listaObjetosDibujables.add(bola);      
         }
     }
-    
-    public void inicializarNivel(int nivel) {
+        
+    public void inicializarNivel() {
         // TO-DO
-        if (nivel == 0) {
             StdSound.playMidi(("assets/audio/start_level.mid"));
             vidas = NUM_VIDAS;
-            puntos = 0;
             // TODO
             listaObjetosDibujables.add(new Fondo("assets/img/fondo00.jpg"));
             listaObjetosDibujables.add(new Marcador(this)); // inyección de dependencias
@@ -141,7 +142,6 @@ public class GameLogic {
             inicializarBloques(listaBloques, MapaNivel.mapa, nivel);
             listaObjetosDibujables.addAll(listaBloques);
             // TODO 
-        }
         
         // TODO 
         

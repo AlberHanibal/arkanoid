@@ -2,6 +2,7 @@ package figuras;
 
 import figuras.base.Dibujable;
 import figuras.base.Eliminable;
+import figuras.base.Punto;
 import figuras.base.Sprite;
 import logic.GameLogic;
 
@@ -14,6 +15,10 @@ public class Bloque extends Sprite implements Eliminable, Dibujable {
     private int vida;
     private boolean eliminar;
     private int puntuacion;
+//    public Punto arribaIzq;
+//    public Punto arribaDcha;
+//    public Punto abajoIzq;
+//    public Punto abajoDcha;
     
     public Bloque (GameLogic logic, String skin) {
         super(new String[] {"assets/img/" + skin});
@@ -25,6 +30,14 @@ public class Bloque extends Sprite implements Eliminable, Dibujable {
             puntuacion = 50;
         }
         eliminar = false;
+//        arribaIzq.x = x;
+//        arribaIzq.y = y;
+//        arribaDcha.x = x + width;
+//        arribaDcha.y = y;
+//        abajoIzq.x = x;
+//        abajoIzq.y = y + height;
+//        abajoDcha.x = x + width;
+//        abajoDcha.y = y + height;
     }
 
     public int getPuntuacion() {

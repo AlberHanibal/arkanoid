@@ -15,10 +15,10 @@ public abstract class Sprite implements Dibujable {
 
     private BufferedImage[] skin;
     private int selectedSkin;
-    private int x;
-    private int y;
-    private int width;
-    private int height;
+    public int x;
+    public int y;
+    public int width;
+    public int height;
 
     private boolean skinAutoRotation;
     private int skinIni;

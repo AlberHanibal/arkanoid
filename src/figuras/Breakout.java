@@ -7,6 +7,7 @@ package figuras;
 
 import figuras.base.Sprite;
 import logic.GameLogic;
+import figuras.base.Animable;
 
 /**
  *
@@ -25,11 +26,15 @@ public class Breakout extends Sprite {
     }
     
     public void moverIzquierda() {
-        setX(getX() - 10);
+        if ((getX() - 10) > 0) {
+            setX(getX() - 10);
+        }
     }
     
     public void moverDerecha() {
-        setX(getX() + 10);
+        if ((getX() + 10 < 500 - 72)) {
+            setX(getX() + 10);
+        }
     }
     
 }

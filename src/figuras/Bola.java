@@ -4,6 +4,7 @@ import audio.StdSound;
 import figuras.base.Animable;
 import figuras.base.Eliminable;
 import figuras.base.Sprite;
+import java.awt.Rectangle;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
@@ -70,24 +71,47 @@ public class Bola extends Sprite implements Animable, Eliminable {
         Iterator<Bloque> iter = bloques.iterator();
         while (iter.hasNext()) {
             Bloque brick = iter.next();
-            if (this.colisonaCon(brick)) {
+//            if (this.colisonaCon(brick)) {
+//                incrY = - incrY;
+//                StdSound.play("assets\\audio\\ding.au");
+//                Random random = new Random();
+//                incrX = incrX + (random.nextInt(2) - 1);
+//                brick.restarVida();
+//                if (brick.getVida() == 0) {
+//                    brick.setEliminar(true);
+//                    random = new Random();
+//                    //if (random.nextInt(7) == 1) {
+//                        //Mejora m = generarMejora(brick.getX(), brick.getY());
+//                        //logica.getListaObjetosDibujables().add(m);
+//                    //}
+//                    iter.remove();
+//                    logica.setPuntos(logica.getPuntos() + brick.getPuntuacion());
+//                    
+//                }
+//                colisionConBloque = true;
+//            }
+            if (this.colisionVertical(brick)) {
                 incrY = - incrY;
+                colisionConBloque = true;
+            } else if (this.colisionHorizontal(brick)) {
+                incrX = - incrX;
+                colisionConBloque = true;
+            }
+            if (colisionConBloque) {
                 StdSound.play("assets\\audio\\ding.au");
                 Random random = new Random();
                 incrX = incrX + (random.nextInt(2) - 1);
                 brick.restarVida();
                 if (brick.getVida() == 0) {
                     brick.setEliminar(true);
-                    random = new Random();
-                    //if (random.nextInt(7) == 1) {
-                        //Mejora m = generarMejora(brick.getX(), brick.getY());
-                        //logica.getListaObjetosDibujables().add(m);
-                    //}
+//                    random = new Random();
+//                    if (random.nextInt(7) == 1) {
+//                        Mejora m = generarMejora(brick.getX(), brick.getY());
+//                        logica.getListaObjetosDibujables().add(m);
+//                    }
                     iter.remove();
                     logica.setPuntos(logica.getPuntos() + brick.getPuntuacion());
-                    
                 }
-                colisionConBloque = true;
             }
         }
         // con mejora roja
@@ -97,6 +121,34 @@ public class Bola extends Sprite implements Animable, Eliminable {
         }
     }
 
+    private boolean colisionHorizontal(Bloque brick) {
+        Rectangle recBola = new Rectangle(this.getX(), this.getY(), this.getWidth(), this.getHeight());
+        if ( new Rectangle(brick.x, brick.y, 1, brick.height).intersects(recBola) || 
+                new Rectangle(brick.x + brick.width, brick.y, 1, brick.height).intersects(recBola) ) {
+            return true;
+        } else {
+            return false;
+        }
+//        if ((this.getX() == brick.arribaIzq.x && this.getY() > brick.arribaIzq.y && this.getY() <= brick.abajoIzq.y) 
+//        || this.getX() == brick.arribaDcha.x && this.getY() > brick.arribaDcha.y && this.getY() <= brick.abajoDcha.y){
+//            return true;
+//        } else {
+//            return false;
+//        }
+    }
+    
+    private boolean colisionVertical(Bloque brick) {
+       Rectangle recBola = new Rectangle(this.getX(), this.getY(), this.getWidth(), this.getHeight());
+        if ( new Rectangle(brick.x, brick.y, brick.width, 1).intersects(recBola) || 
+                new Rectangle(brick.x, brick.y + brick.height, brick.width, 1).intersects(recBola) ) {
+            return true;
+        } else {
+            return false;
+        }
+//        this.getY() == brick.getY() && this.getX() > brick.getX() && this.getX() <= brick.getX() + brick.getWidth() ||
+//                this.getY() == brick.getY() + brick.getHeight() && this.getX() > brick.getX() && this.getX() <= brick.getX() + brick.getWidth())
+    }
+    
     private Mejora generarMejora(int x, int y) {
         Random random = new Random();
         int n = random.nextInt(2);
