@@ -84,6 +84,7 @@ public class GameLogic {
         }
         if (listaBloques.isEmpty()) {
             listaObjetosDibujables.clear();
+            listaBolas.clear();
             nivel = nivel + 1;
             inicializarNivel();
         }
@@ -108,8 +109,7 @@ public class GameLogic {
     }
     
     public void empezar() {
-        // TO-DO Inicia el juego!
-        listaObjetosDibujables.clear();
+        // Inicia el juego!
         nivel = 0;
         puntos = 0;
         inicializarNivel();
@@ -127,24 +127,28 @@ public class GameLogic {
     }
         
     public void inicializarNivel() {
-        // TO-DO
+        listaObjetosDibujables.clear();
+        if (nivel == 0) {
             StdSound.playMidi(("assets/audio/start_level.mid"));
-            vidas = NUM_VIDAS;
-            // TODO
-            listaObjetosDibujables.add(new Fondo("assets/img/fondo00.jpg"));
-            listaObjetosDibujables.add(new Marcador(this)); // inyección de dependencias
-            breakout = new Breakout(this); // inyección de dependencias
-            listaObjetosDibujables.add(breakout);
-            Bola bola = new Bola(this);
-            bola.setModoInvencible(true);
-            listaBolas.add(bola);
-            listaObjetosDibujables.add(bola);
-            inicializarBloques(listaBloques, MapaNivel.mapa, nivel);
-            listaObjetosDibujables.addAll(listaBloques);
-            // TODO 
-        
-        // TODO 
-        
+        } else {
+            StdSound.playMidi(("assets/audio/start_level2.mid"));
+        }
+        vidas = NUM_VIDAS;
+        // TODO
+        listaObjetosDibujables.add(new Fondo("assets/img/fondo00.jpg"));
+        listaObjetosDibujables.add(new Marcador(this)); // inyección de dependencias
+        breakout = new Breakout(this); // inyección de dependencias
+        listaObjetosDibujables.add(breakout);
+        Bola bola = new Bola(this);
+        bola.setModoInvencible(true);
+        listaBolas.add(bola);
+        listaObjetosDibujables.add(bola);
+        if (nivel == 0) {
+            inicializarBloques(listaBloques, MapaNivel.mapa, 0);
+        } else {
+            inicializarBloques(listaBloques, MapaNivel.mapa, 1);
+        }
+        listaObjetosDibujables.addAll(listaBloques);
     }
 
     private void inicializarBloques(List<Bloque> bloques, String[][] mapa, int nivel) {
@@ -161,7 +165,6 @@ public class GameLogic {
                     bloques.add(brick);    
                 }
                 horizontal = horizontal + 44;
-                
             }
             vertical = vertical + 22;
         }
@@ -186,7 +189,6 @@ public class GameLogic {
             return "hard.png";
         } else {
             return "error";
-//            throw new IllegalArgumentException();
         }
     }
     

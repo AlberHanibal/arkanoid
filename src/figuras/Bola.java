@@ -71,33 +71,8 @@ public class Bola extends Sprite implements Animable, Eliminable {
         Iterator<Bloque> iter = bloques.iterator();
         while (iter.hasNext()) {
             Bloque brick = iter.next();
-//            if (this.colisonaCon(brick)) {
-//                incrY = - incrY;
-//                StdSound.play("assets\\audio\\ding.au");
-//                Random random = new Random();
-//                incrX = incrX + (random.nextInt(2) - 1);
-//                brick.restarVida();
-//                if (brick.getVida() == 0) {
-//                    brick.setEliminar(true);
-//                    random = new Random();
-//                    //if (random.nextInt(7) == 1) {
-//                        //Mejora m = generarMejora(brick.getX(), brick.getY());
-//                        //logica.getListaObjetosDibujables().add(m);
-//                    //}
-//                    iter.remove();
-//                    logica.setPuntos(logica.getPuntos() + brick.getPuntuacion());
-//                    
-//                }
-//                colisionConBloque = true;
-//            }
-            if (this.colisionVertical(brick)) {
+            if (this.colisonaCon(brick)) {
                 incrY = - incrY;
-                colisionConBloque = true;
-            } else if (this.colisionHorizontal(brick)) {
-                incrX = - incrX;
-                colisionConBloque = true;
-            }
-            if (colisionConBloque) {
                 StdSound.play("assets\\audio\\ding.au");
                 Random random = new Random();
                 incrX = incrX + (random.nextInt(2) - 1);
@@ -112,7 +87,31 @@ public class Bola extends Sprite implements Animable, Eliminable {
                     iter.remove();
                     logica.setPuntos(logica.getPuntos() + brick.getPuntuacion());
                 }
+                colisionConBloque = true;
             }
+//            if (this.colisionVertical(brick)) {
+//                incrY = - incrY;
+//                colisionConBloque = true;
+//            } else if (this.colisionHorizontal(brick)) {
+//                incrX = - incrX;
+//                colisionConBloque = true;
+//            }
+//            if (colisionConBloque) {
+//                StdSound.play("assets\\audio\\ding.au");
+//                Random random = new Random();
+//                incrX = incrX + (random.nextInt(2) - 1);
+//                brick.restarVida();
+//                if (brick.getVida() == 0) {
+//                    brick.setEliminar(true);
+////                    random = new Random();
+////                    if (random.nextInt(7) == 1) {
+////                        Mejora m = generarMejora(brick.getX(), brick.getY());
+////                        logica.getListaObjetosDibujables().add(m);
+////                    }
+//                    iter.remove();
+//                    logica.setPuntos(logica.getPuntos() + brick.getPuntuacion());
+//                }
+//            }
         }
         // con mejora roja
         if (modoInvencible && colisionConBloque) {
